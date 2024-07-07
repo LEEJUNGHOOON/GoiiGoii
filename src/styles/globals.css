@@ -31,3 +31,10 @@ body {
     text-wrap: balance;
   }
 }
+
+.underline-spaced {
+  text-decoration: underline;
+  text-underline-offset: 6px; /* 밑줄과 텍스트 사이의 간격을 조정합니다 */
+  text-decoration-thickness: 2px; /* 밑줄의 두께를 조정합니다 */
+  opacity: 85%;
+}
