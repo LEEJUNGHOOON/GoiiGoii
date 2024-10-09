@@ -5,7 +5,7 @@ export default function RootLayout({
 }) {
   return (
     <div className="bg-white">
-      <div className="text-black text-center text-4xl bold mt-10">
+      <div className="text-black text-center text-4xl b mt-10">
         <h1>Archive</h1>
       </div>
       {children}
