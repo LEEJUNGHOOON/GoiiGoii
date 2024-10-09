@@ -9,9 +9,4 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
-
-  @Get('api')
-  getData() {
-    return { message: 'Hello from NestJS API' };
-  }
 }

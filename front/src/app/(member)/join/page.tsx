@@ -1,10 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 import { useRouter } from "next/navigation";
+import { signinUser, idCheck } from "../../../store/actions/userAction";
+
 interface InputChangeEvent extends React.ChangeEvent<HTMLInputElement> {}
 
 const Join: React.FC = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
@@ -18,6 +22,28 @@ const Join: React.FC = () => {
   const [isCustomDomain, setIsCustomDomain] = useState(true);
 
   const [showVerificationInfo, setShowVerificationInfo] = useState(false);
+  const [idCheckTryied, setIdCheckTryied] = useState(false);
+  const [showIdCheckInfo, setShowIdCheckInfo] = useState(false);
+
+  const handleIdCheckButtonClick = () => {
+    setIdCheckTryied(true);
+    let body = {
+      id: id,
+    };
+    const data = dispatch(idCheck(body));
+    data.payload.then((result) => {
+      console.log(result.idCheckSuccess);
+      if (result.idCheckSuccess) {
+        //아이디가 중복하지 않을때
+        setShowIdCheckInfo((prev) => !prev);
+        alert("해당아이디는 사용 가능 합니다.");
+      } else if (!result.idCheckSuccess) {
+        //아이디가 중복 할때
+        alert("해당아이디는 이미 사용 중입니다.");
+        return;
+      }
+    });
+  };
   const handleButtonClick = () => {
     setShowVerificationInfo(true);
   };
@@ -30,7 +56,7 @@ const Join: React.FC = () => {
   const onConfirmPwChange = (event: InputChangeEvent) => {
     const value = event.currentTarget.value;
     setConfirmPassword(value);
-    setIsMismatch(value !== password);
+    setIsMismatch(value == password);
   };
   const onNameChange = (event: InputChangeEvent) => {
     setName(event.currentTarget.value);
@@ -42,6 +68,7 @@ const Join: React.FC = () => {
       .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
       .replace(/(\-{1,2})$/g, "");
   };
+
   const onPhoneChange = (event: InputChangeEvent) => {
     let inputValue = event.currentTarget.value.replace(/[^0-9]/g, "");
     if (inputValue.length > 11) {
@@ -80,6 +107,51 @@ const Join: React.FC = () => {
     }
   };
   const handleNextButtonClick = () => {
+    if (!idCheckTryied) {
+      alert("아이디 중복체크를 해주세요");
+      return;
+    }
+    if (
+      !id ||
+      !password ||
+      !confirmPassword ||
+      !name ||
+      !phone ||
+      !email ||
+      !localPart ||
+      !domainPart
+    ) {
+      alert("모든 필드를 입력해주세요.");
+      return;
+    } else if (!isMismatch) {
+      alert("비밀번호가 서로 맞지 않습니다");
+      return;
+    } else if (!showIdCheckInfo) {
+      alert("아이디가 중복입니다.");
+      return;
+    }
+    let body = {
+      id: id,
+      password: password,
+      name: name,
+      phone: phone,
+      email: email,
+    };
+    const data = dispatch(signinUser(body));
+    data.payload.then((result) => {
+      console.log(result);
+      if (result.success) {
+        const queryParams = new URLSearchParams({
+          member_id: body.id,
+          member_name: body.name,
+          member_email: body.email,
+        }).toString();
+        router.push(`/joincomplete?${queryParams}`);
+        console.log("go to login");
+      } else if (!result.success) {
+        alert("Failed to sign up");
+      }
+    });
     router.push("/joincomplete");
   };
 
@@ -111,6 +183,13 @@ const Join: React.FC = () => {
                   value={id}
                   onChange={onIdChange}
                 />
+                <button
+                  type="button"
+                  className="btn btn-primary text-xs"
+                  onClick={handleIdCheckButtonClick}
+                >
+                  아이디 중복 확인
+                </button>
                 <span className="text-xs text-gray-600">
                   (영문소문자/숫자, 4~16자)
                 </span>
@@ -163,7 +242,7 @@ const Join: React.FC = () => {
                   type="password"
                   onChange={onConfirmPwChange}
                 />
-                {confirmPassword && isMismatch && (
+                {confirmPassword && !isMismatch && (
                   <span className="text-xs text-red-600">
                     비밀번호가 같지 않습니다.
                   </span>
@@ -252,8 +331,14 @@ const Join: React.FC = () => {
               인증번호
             </th>
             <td className="border px-4 py-2">
-              <div className="flex items-center justify-end space-x-2 mr-8">
-                <button type="button" className=" btn btn-primary bg-blue-600 hover:bg-blue-900 text-white px-3 py-1 rounded">
+              <div className="flex items-center space-x-2 mr-8">
+                <input
+                  type="text"
+                  className="border rounded w-60 h-7 px-2 py-1"
+                  placeholder="verification code"
+                  disabled={!showVerificationInfo}
+                />
+                <button type="button" className="btn btn-primary text-xs pl-5">
                   확인
                 </button>
               </div>
@@ -297,7 +382,7 @@ const Join: React.FC = () => {
                 >
                   <option value="self">직접입력</option>
                   <option value="naver.com">naver.com</option>
-                  <option value="google.com">google.com</option>
+                  <option value="google.com">gmail.com</option>
                   <option value="hanmail.net">hanmail.net</option>
                   <option value="nate.com">nate.com</option>
                   <option value="kakao.com">kakao.com</option>

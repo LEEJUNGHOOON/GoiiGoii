@@ -25,13 +25,16 @@
     }
   },
   "include": [
+    "video.d.ts",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
     "public/constraint/Agree.js",
     "public/constraint/agree.jsx",
-    "public/constraint/agree.js"
+    "public/constraint/agree.js",
+    "actions.ts",
+    "global.d.ts"
   ],
   "exclude": ["node_modules"]
 }

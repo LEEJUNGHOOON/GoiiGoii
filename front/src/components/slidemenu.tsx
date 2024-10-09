@@ -1,5 +1,5 @@
-import React from 'react';
-import Link from 'next/link';
+import React from "react";
+import Link from "next/link";
 
 interface MenuProps {
   isOpen: boolean;
@@ -7,11 +7,17 @@ interface MenuProps {
 }
 
 const Menu: React.FC<MenuProps> = ({ isOpen, onClose }) => {
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-start items-start transition duration-1000 ease-in-out">
-      <div className="bg-white w-64 h-full p-4">
+    <div
+      className={`fixed inset-0 bg-black bg-opacity-80 flex justify-start items-start transition-opacity duration-500 ease-in-out z-50 ${
+        isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+      }`}
+    >
+      <div
+        className={`bg-white w-64 h-full p-4 transition-transform duration-500 ease-in-out ${
+          isOpen ? "transform translate-x-0" : "transform -translate-x-full"
+        }`}
+      >
         <button
           className="mb-4 text-black transition-colors duration-1000 ease-in-out hover:text-gray-500 hover:opacity-70"
           onClick={onClose}
@@ -22,28 +28,28 @@ const Menu: React.FC<MenuProps> = ({ isOpen, onClose }) => {
           <li className="mb-4">
             <Link href="/about.html">
               <span className="text-black transition-colors duration-300 ease-in-out hover:text-gray-500 hover:opacity-70 cursor-pointer">
-                about
+                About
               </span>
             </Link>
           </li>
           <li className="mb-4">
             <Link href="/product/list.html">
               <span className="text-black transition-colors duration-300 ease-in-out hover:text-gray-500 hover:opacity-70 cursor-pointer">
-                shop
+                Shop
               </span>
             </Link>
           </li>
           <li className="mb-4">
             <Link href="/">
               <span className="text-black transition-colors duration-300 ease-in-out hover:text-gray-500 hover:opacity-70 cursor-pointer">
-                archive
+                Archive
               </span>
             </Link>
           </li>
           <li className="mb-4">
-            <Link href="/">
+            <Link href="/contact">
               <span className="text-black transition-colors duration-300 ease-in-out hover:text-gray-500 hover:opacity-70 cursor-pointer">
-                Tip
+                Contact
               </span>
             </Link>
           </li>

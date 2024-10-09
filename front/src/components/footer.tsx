@@ -7,8 +7,8 @@ import youtube from "../../public/Icon/youtube.png";
 
 
 const Footer: React.FC = () => {
-  const companyName = "Your Company Name";
-  const presidentName = "President Name";
+  const companyName = "GoiiGoii_Seoul";
+  const presidentName = "김수영";
   const companyRegNo = "123-45-67890";
   const networkRegNo = "Network Registration Number";
   const bizNoLink = <a href="#none">Biz No Link</a>;
@@ -17,9 +17,9 @@ const Footer: React.FC = () => {
   const mallZipcode = "12345";
   const mallAddr1 = "Address Line 1";
   const mallAddr2 = "Address Line 2";
-  const cpoEmail = "cpo@example.com";
+  const cpoEmail = "wjdgns9799@gmail.com";
   const cpoName = "CPO Name";
-  const email = "info@example.com";
+  const email = "info@designbug.co.kr";
   const runtime = "Mon-Fri 9am-6pm";
   const mallName = "wjdgns9799@gmail.com";
 
@@ -28,10 +28,10 @@ const Footer: React.FC = () => {
       <div className="max-w-screen-xl mx-auto text-black">
         <div className="flex justify-around">
           <div className='flex space-x-8'>
-            <a href="#none">
+            <a href="https://www.instagram.com/goiigoii_seoul/">
               <Image src={insta} alt="instagram" className='w-8' ></Image>
             </a>
-            <a href="#none">
+            <a href="https://www.youtube.com">
               <Image src={youtube} alt="instagram" className='w-8' ></Image>
             </a>
             <a href="#none">

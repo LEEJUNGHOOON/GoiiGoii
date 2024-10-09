@@ -1,8 +1,16 @@
 "use client"
-import { useRouter } from "next/navigation";
+import { useRouter,useSearchParams } from "next/navigation";
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../store/store';
 
 const JoinComplete: React.FC = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const memberId = searchParams.get('member_id');
+  const memberName = searchParams.get('member_name');
+  const memberEmail = searchParams.get('member_email');
+  // const userData = useSelector((state: RootState) => state.user.userData);
+  // console.log(`userData is ${userData}`)
   const goToMain = () => {
     router.push("/");
   };
@@ -20,7 +28,7 @@ const JoinComplete: React.FC = () => {
 
           <div className="memberSpecial my-6">
             <p className="text-center text-base text-gray-700">
-              <strong className="text-black"> 님</strong>은{" "}
+              <strong className="text-black">{memberName} 님</strong>은{" "}
               <strong className="text-black"></strong> 회원이십니다.
             </p>
           </div>
@@ -31,15 +39,15 @@ const JoinComplete: React.FC = () => {
                 <dl className="ec-base-desc space-y-2">
                   <div className="flex justify-between">
                     <dt className="w-24">아이디</dt>
-                    <dd className="flex-1">$member_id</dd>
+                    <dd className="flex-1">{memberId}</dd>
                   </div>
                   <div className="flex justify-between">
                     <dt className="w-24">이름</dt>
-                    <dd className="flex-1">$member_name</dd>
+                    <dd className="flex-1">{memberName}</dd>
                   </div>
                   <div className="flex justify-between">
                     <dt className="w-24">이메일</dt>
-                    <dd className="flex-1">$member_email</dd>
+                    <dd className="flex-1">{memberEmail}</dd>
                   </div>
                 </dl>
               </div>

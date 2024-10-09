@@ -1,15 +1,54 @@
 "use client";
+import { auth } from "@/store/actions/userAction";
 import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+
+// interface InputChangeEvent extends React.ChangeEvent<HTMLInputElement> {}
 
 const Login: React.FC = () => {
   const router = useRouter();
-  const goToMain = () => {
-    router.push("/");
+  const dispatch = useDispatch();
+  const [id, setId] = useState("");
+
+  const [password, setPassword] = useState("");
+  const onIdChange = (event) => {
+    setId(event.currentTarget.value);
+  };
+  const onPwChange = (event) => {
+    setPassword(event.currentTarget.value);
+  };
+  const onLogin = () => {
+    if (!id && password) {
+      alert("아이디를 입력해주세요");
+      return;
+    } else if (id && !password) {
+      alert("비밀번호를 입력해주세요");
+      return;
+    } else if (!id && !password) {
+      alert("모든필드를 입력해주세요");
+      return;
+    }
+    let body = {
+      id: id,
+      password: password,
+    };
+    const data = dispatch(auth(body));
+    data.payload.then((result) => {
+      console.log(result);
+      if (result.token !== null) {
+        router.push("/");
+        console.log("logined");
+        sessionStorage.setItem("userId", result.user);
+      } else if (!result.token) {
+        alert("Failed to login");
+      }
+    });
   };
   return (
     <div className="bg-white  flex items-center justify-center">
       <div className="bg-white p-8 rounded shadow-md w-full  login">
-        <form>
+        <form className="mx-52">
           <div className="mb-4 login__field">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -22,6 +61,8 @@ const Login: React.FC = () => {
               id="username"
               type="text"
               placeholder="ID"
+              value={id}
+              onChange={onIdChange}
             />
           </div>
           <div className="mb-6 login__field">
@@ -36,6 +77,8 @@ const Login: React.FC = () => {
               id="password"
               type="password"
               placeholder="password"
+              value={password}
+              onChange={onPwChange}
             />
           </div>
           <div className="login__security mb-10">
@@ -52,7 +95,7 @@ const Login: React.FC = () => {
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline min-w-96 md:w-5 "
               type="button"
-              onClick={goToMain}
+              onClick={onLogin}
             >
               로그인
             </button>
