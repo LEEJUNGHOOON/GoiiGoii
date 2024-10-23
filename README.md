@@ -287,4 +287,4 @@ https://github.com/user-attachments/assets/75aa1dfc-a1a1-405d-a82e-5901a98565d9
 <hr/>
 
 ## refernece
- >> https://nomadcoders.co/?gclid=Cj0KCQiA8aOeBhCWARIsANRFrQEG_dDbGQcm9i_qy_56R8y-i7G7POUm1YUVGWWkhqut30a4lKK96PIaAtLAEALw_wcB
+ >> https://typo.tistory.com/entry/Nest-Next-n2server-%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0
