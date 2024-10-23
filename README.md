@@ -271,16 +271,23 @@ https://github.com/user-attachments/assets/75aa1dfc-a1a1-405d-a82e-5901a98565d9
 
 <hr/>
 
-## How to run server
+## How to run 
 
-    git clone` git@github.com:LEEJUNGHOOON/movieCloneCoding.git
+    git clone` git@github.com:LEEJUNGHOOON/GoiiGoii.git 
 
     npm i
 
-    cd server
+## 1.
+
+    cd back/server
+
+    npm run start:dev
+
+## 2.
+
+    cd front
 
     npm run dev
-
 <hr/>
 
 Deployed Server: url
